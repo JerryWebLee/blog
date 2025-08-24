@@ -15,6 +15,8 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
     "type-check": "nuxt typecheck",
     "prepare-scopes": "node scripts/generateScopes.js",
     "cz": "npm run prepare-scopes && czg",
@@ -54,6 +56,7 @@
     "husky": "^9.1.7",
     "ignore": "^7.0.5",
     "lint-staged": "^16.1.5",
+    "prettier": "^3.6.2",
     "semantic-release": "^24.2.7"
   },
   "config": {
@@ -63,16 +66,23 @@
   },
   "lint-staged": {
     "app/**/*.{js,jsx,ts,tsx,vue}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
     ],
     "server/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
     ],
     "utils/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
     ],
     "scripts/**/*.{js,jsx,ts,tsx}": [
-      "eslint --fix"
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "**/*.{md,json,yml,yaml,css,scss,less}": [
+      "prettier --write"
     ]
   },
   "engines": {
