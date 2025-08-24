@@ -5,7 +5,7 @@ const testObject = {
 }
 
 function testFunction() {
-  const message = 'Hello ' + testObject.name
+  const message = `Hello ${testObject.name}`
   return message
 }
 

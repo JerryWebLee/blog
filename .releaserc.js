@@ -15,7 +15,7 @@ export default {
       {
         preset: 'angular',
         writerOpts: {
-          transform(commit, context) {
+          transform(commit) {
             const typeMap = {
               feat: '✨ 新增功能',
               fix: '🐛 修复缺陷',

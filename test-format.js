@@ -5,7 +5,7 @@ const test = {
 }
 
 function formatTest() {
-  return test.name + ' ' + test.value
+  return `${test.name} ${test.value}`
 }
 
 module.exports = { test, formatTest }
