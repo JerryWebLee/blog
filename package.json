@@ -1,0 +1,81 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "build:prod": "NODE_ENV=production nuxt build",
+    "dev": "nuxt dev",
+    "dev:prod": "NODE_ENV=production nuxt dev",
+    "dev:test": "NODE_ENV=test nuxt dev",
+    "generate": "nuxt generate",
+    "generate:prod": "NODE_ENV=production nuxt generate",
+    "preview": "nuxt preview",
+    "preview:prod": "NODE_ENV=production nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "type-check": "nuxt typecheck",
+    "prepare-scopes": "node scripts/generateScopes.js",
+    "cz": "npm run prepare-scopes && czg",
+    "release": "semantic-release --no-ci",
+    "prepare": "husky",
+    "cz:release": "npm run cz && npm run release",
+    "preinstall": "node scripts/check-node-version.js"
+  },
+  "dependencies": {
+    "@nuxt/content": "3.6.3",
+    "@nuxt/eslint": "1.9.0",
+    "@nuxt/image": "1.11.0",
+    "@nuxt/ui": "3.3.0",
+    "@nuxtjs/i18n": "10.0.3",
+    "@pinia/nuxt": "^0.11.2",
+    "better-sqlite3": "^12.2.0",
+    "eslint": "^9.34.0",
+    "nuxt": "^4.0.3",
+    "pinia": "^3.0.3",
+    "typescript": "^5.9.2",
+    "vue": "^3.5.18",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/js": "^9.34.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/npm": "^12.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.40.0",
+    "@typescript-eslint/parser": "^8.40.0",
+    "commitizen": "^4.3.1",
+    "conventional-changelog-angular": "^8.0.0",
+    "czg": "^1.12.0",
+    "globals": "^16.3.0",
+    "husky": "^9.1.7",
+    "ignore": "^7.0.5",
+    "lint-staged": "^16.1.5",
+    "semantic-release": "^24.2.7"
+  },
+  "config": {
+    "commitizen": {
+      "path": "node_modules/czg"
+    }
+  },
+  "lint-staged": {
+    "app/**/*.{js,jsx,ts,tsx,vue}": [
+      "eslint --fix"
+    ],
+    "server/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "utils/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "scripts/**/*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ]
+  },
+  "engines": {
+    "node": ">=20.8.1"
+  }
+}
