@@ -5,10 +5,10 @@
         <!-- Copyright -->
         <div class="text-center md:text-left">
           <p class="text-sm text-gray-500">
-            © {{ currentYear }} {{ appName }}. {{ $t("footer.rights") }}
+            © {{ currentYear }} {{ appName }}. {{ $t('footer.rights') }}
           </p>
           <p class="text-xs text-gray-400 mt-1">
-            {{ $t("footer.version") }}: {{ appVersion }}
+            {{ $t('footer.version') }}: {{ appVersion }}
           </p>
         </div>
 
@@ -19,13 +19,13 @@
               to="/privacy"
               class="text-sm text-gray-500 hover:text-gray-900"
             >
-              {{ $t("footer.privacy") }}
+              {{ $t('footer.privacy') }}
             </NuxtLink>
             <NuxtLink
               to="/terms"
               class="text-sm text-gray-500 hover:text-gray-900"
             >
-              {{ $t("footer.terms") }}
+              {{ $t('footer.terms') }}
             </NuxtLink>
           </nav>
         </div>
@@ -35,11 +35,11 @@
 </template>
 
 <script setup lang="ts">
-// 获取应用配置
-const { app } = useEnvironmentConfig();
-const appName = computed(() => app.name);
-const appVersion = computed(() => app.version);
+  // 获取应用配置
+  const { app } = useEnvironmentConfig()
+  const appName = computed(() => app.name)
+  const appVersion = computed(() => app.version)
 
-// 当前年份
-const currentYear = computed(() => new Date().getFullYear());
+  // 当前年份
+  const currentYear = computed(() => new Date().getFullYear())
 </script>

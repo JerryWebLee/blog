@@ -8,11 +8,11 @@ export default defineNuxtPlugin(() => {
       console.log('API 响应成功:', response)
       return response
     },
-    
+
     // 响应错误时的处理
     onResponseError(error) {
       console.error('API 响应错误:', error)
-      
+
       // 可以根据错误码进行不同的处理
       switch (error.code) {
         case 401:
@@ -31,6 +31,6 @@ export default defineNuxtPlugin(() => {
           // 其他错误
           console.error(`请求失败: ${error.message}`)
       }
-    }
+    },
   })
-}) 
+})

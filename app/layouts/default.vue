@@ -9,9 +9,9 @@
 </template>
 
 <script setup lang="ts">
-// 布局组件
+  // 布局组件
 </script>
 
 <style scoped>
-/* 布局样式 */
+  /* 布局样式 */
 </style>

@@ -1,83 +1,83 @@
-import { defineStore } from "pinia";
-import type { User } from "~/types";
+import { defineStore } from 'pinia'
+import type { User } from '~/types'
 
-export const useUserStore = defineStore("user", () => {
+export const useUserStore = defineStore('user', () => {
   // 状态
-  const user = ref<User | null>(null);
-  const isAuthenticated = computed(() => !!user.value);
-  const isLoading = ref(false);
+  const user = ref<User | null>(null)
+  const isAuthenticated = computed(() => !!user.value)
+  const isLoading = ref(false)
 
   // 获取用户信息
   const fetchUser = async () => {
     try {
-      isLoading.value = true;
+      isLoading.value = true
       // 这里应该调用实际的 API
-      const response = await $fetch("/api/user/profile");
-      user.value = response.data;
+      const response = await $fetch('/api/user/profile')
+      user.value = response.data
     } catch (error) {
-      console.error("获取用户信息失败:", error);
-      user.value = null;
+      console.error('获取用户信息失败:', error)
+      user.value = null
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
-  };
+  }
 
   // 登录
   const login = async (credentials: { email: string; password: string }) => {
     try {
-      isLoading.value = true;
-      const response = await $fetch("/api/auth/login", {
-        method: "POST",
+      isLoading.value = true
+      const response = await $fetch('/api/auth/login', {
+        method: 'POST',
         body: credentials,
-      });
+      })
 
       if (response.success) {
-        user.value = response.data.user;
-        return { success: true };
+        user.value = response.data.user
+        return { success: true }
       } else {
-        return { success: false, message: response.message };
+        return { success: false, message: response.message }
       }
     } catch (error) {
-      console.error("登录失败:", error);
-      return { success: false, message: "登录失败，请重试" };
+      console.error('登录失败:', error)
+      return { success: false, message: '登录失败，请重试' }
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
-  };
+  }
 
   // 登出
   const logout = async () => {
     try {
-      await $fetch("/api/auth/logout", { method: "POST" });
+      await $fetch('/api/auth/logout', { method: 'POST' })
     } catch (error) {
-      console.error("登出失败:", error);
+      console.error('登出失败:', error)
     } finally {
-      user.value = null;
+      user.value = null
     }
-  };
+  }
 
   // 更新用户信息
   const updateProfile = async (profile: Partial<User>) => {
     try {
-      isLoading.value = true;
-      const response = await $fetch("/api/user/profile", {
-        method: "PUT",
+      isLoading.value = true
+      const response = await $fetch('/api/user/profile', {
+        method: 'PUT',
         body: profile,
-      });
+      })
 
       if (response.success) {
-        user.value = { ...user.value, ...response.data };
-        return { success: true };
+        user.value = { ...user.value, ...response.data }
+        return { success: true }
       } else {
-        return { success: false, message: response.message };
+        return { success: false, message: response.message }
       }
     } catch (error) {
-      console.error("更新用户信息失败:", error);
-      return { success: false, message: "更新失败，请重试" };
+      console.error('更新用户信息失败:', error)
+      return { success: false, message: '更新失败，请重试' }
     } finally {
-      isLoading.value = false;
+      isLoading.value = false
     }
-  };
+  }
 
   return {
     // 状态
@@ -90,5 +90,5 @@ export const useUserStore = defineStore("user", () => {
     login,
     logout,
     updateProfile,
-  };
-});
+  }
+})

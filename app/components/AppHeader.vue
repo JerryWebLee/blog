@@ -16,14 +16,14 @@
             class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
             active-class="text-blue-600"
           >
-            {{ $t("nav.home") }}
+            {{ $t('nav.home') }}
           </NuxtLink>
           <NuxtLink
             to="/config-demo"
             class="text-gray-500 hover:text-gray-900 px-3 py-2 rounded-md text-sm font-medium"
             active-class="text-blue-600"
           >
-            {{ $t("nav.config") }}
+            {{ $t('nav.config') }}
           </NuxtLink>
         </nav>
 
@@ -45,24 +45,24 @@
 </template>
 
 <script setup lang="ts">
-interface Locale {
-  code: string;
-  language: string;
-}
-
-// 获取应用配置
-const { app } = useEnvironmentConfig();
-const appName = computed(() => app.name);
-
-// 国际化配置
-const { locale, locales } = useI18n();
-const currentLocale = computed(() => locale.value);
-const availableLocales = computed(() => locales.value as Locale[]);
-
-// 切换语言
-const switchLanguage = (code: string) => {
-  if (code === "en" || code === "zh") {
-    locale.value = code;
+  interface Locale {
+    code: string
+    language: string
   }
-};
+
+  // 获取应用配置
+  const { app } = useEnvironmentConfig()
+  const appName = computed(() => app.name)
+
+  // 国际化配置
+  const { locale, locales } = useI18n()
+  const currentLocale = computed(() => locale.value)
+  const availableLocales = computed(() => locales.value as Locale[])
+
+  // 切换语言
+  const switchLanguage = (code: string) => {
+    if (code === 'en' || code === 'zh') {
+      locale.value = code
+    }
+  }
 </script>

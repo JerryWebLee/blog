@@ -1,34 +1,34 @@
 // 环境配置 composable
 export const useEnvironmentConfig = () => {
   const config = useRuntimeConfig()
-  
+
   return {
     env: {
       isDevelopment: config.public.nodeEnv === 'development',
       isProduction: config.public.nodeEnv === 'production',
       isTest: config.public.nodeEnv === 'test',
-      current: config.public.nodeEnv
+      current: config.public.nodeEnv,
     },
-    
+
     api: {
       baseUrl: config.public.apiBaseUrl,
-      timeout: config.apiTimeout
+      timeout: config.apiTimeout,
     },
-    
+
     app: {
       name: config.public.appName,
-      version: config.public.appVersion
+      version: config.public.appVersion,
     },
-    
+
     debug: {
       enabled: config.public.debug,
-      logLevel: config.public.logLevel
+      logLevel: config.public.logLevel,
     },
-    
+
     server: {
       port: config.public.nitroPort,
-      host: config.public.nitroHost
-    }
+      host: config.public.nitroHost,
+    },
   }
 }
 
@@ -55,4 +55,4 @@ export interface EnvironmentConfig {
     port: number
     host: string
   }
-} 
+}

@@ -1,6 +1,7 @@
 # Enterprise Development Standards - Nuxt 4 Project
 
 ## Table of Contents
+
 1. [Project Structure Standards](#project-structure-standards)
 2. [File Naming Conventions](#file-naming-conventions)
 3. [Code Organization Guidelines](#code-organization-guidelines)
@@ -11,6 +12,7 @@
 ## Project Structure Standards
 
 ### Root Directory Structure
+
 ```
 project-root/
 ├── app/                    # Application source code (Nuxt 4 app directory)
@@ -37,6 +39,7 @@ project-root/
 ### Detailed Directory Guidelines
 
 #### `app/components/` Structure
+
 ```
 components/
 ├── ui/                    # Base UI components (@nuxt/ui extensions)
@@ -68,6 +71,7 @@ components/
 ```
 
 #### `app/composables/` Structure
+
 ```
 composables/
 ├── auth/                  # Authentication composables
@@ -92,6 +96,7 @@ composables/
 ```
 
 #### `app/pages/` Structure
+
 ```
 pages/
 ├── index.vue              # Home page (/)
@@ -112,6 +117,7 @@ pages/
 ```
 
 #### `server/api/` Structure
+
 ```
 server/
 ├── api/
@@ -142,190 +148,203 @@ server/
 ## File Naming Conventions
 
 ### Vue Components
+
 - **PascalCase** for component files: `UserProfile.vue`, `NavigationMenu.vue`
 - **PascalCase** for component names in templates: `<UserProfile />`, `<NavigationMenu />`
 - **kebab-case** for component folders: `user-profile/`, `navigation-menu/`
 
 ### Composables
+
 - **camelCase** with `use` prefix: `useAuth.ts`, `useUserProfile.ts`
 - Export function with same name: `export const useAuth = () => { ... }`
 
 ### Pages
+
 - **kebab-case** for page files: `user-profile.vue`, `forgot-password.vue`
 - **camelCase** for dynamic routes: `[userId].vue`, `[...slug].vue`
 
 ### API Routes
+
 - **kebab-case** for route files: `user-profile.get.ts`, `reset-password.post.ts`
 - HTTP method as file extension: `.get.ts`, `.post.ts`, `.put.ts`, `.delete.ts`
 
 ### Utilities
+
 - **camelCase** for utility files: `formatDate.ts`, `validateEmail.ts`
 - **PascalCase** for classes: `ApiClient.ts`, `EventBus.ts`
 
 ### Assets
+
 - **kebab-case** for all assets: `hero-image.jpg`, `app-logo.svg`
 - Descriptive names with context: `button-primary-bg.png`, `icon-user-24.svg`
 
 ## Code Organization Guidelines
 
 ### Component Structure Pattern
+
 ```vue
 <template>
   <!-- Template content -->
 </template>
 
 <script setup lang="ts">
-// 1. Imports (external libraries first, then internal)
-import { ref, computed, onMounted } from 'vue'
-import type { User } from '~/types/user'
+  // 1. Imports (external libraries first, then internal)
+  import { ref, computed, onMounted } from 'vue'
+  import type { User } from '~/types/user'
 
-// 2. Props definition
-interface Props {
-  user: User
-  isEditable?: boolean
-}
-const props = withDefaults(defineProps<Props>(), {
-  isEditable: false
-})
-
-// 3. Emits definition
-interface Emits {
-  update: [user: User]
-  delete: [id: string]
-}
-const emit = defineEmits<Emits>()
-
-// 4. Composables
-const { $api } = useNuxtApp()
-const { user: currentUser } = useAuth()
-
-// 5. Reactive state
-const isLoading = ref(false)
-const formData = ref({ ...props.user })
-
-// 6. Computed properties
-const canEdit = computed(() => 
-  props.isEditable && currentUser.value?.id === props.user.id
-)
-
-// 7. Methods
-const handleSave = async () => {
-  isLoading.value = true
-  try {
-    const updatedUser = await $api.users.update(formData.value)
-    emit('update', updatedUser)
-  } catch (error) {
-    // Handle error
-  } finally {
-    isLoading.value = false
+  // 2. Props definition
+  interface Props {
+    user: User
+    isEditable?: boolean
   }
-}
+  const props = withDefaults(defineProps<Props>(), {
+    isEditable: false,
+  })
 
-// 8. Lifecycle hooks
-onMounted(() => {
-  // Component initialization
-})
+  // 3. Emits definition
+  interface Emits {
+    update: [user: User]
+    delete: [id: string]
+  }
+  const emit = defineEmits<Emits>()
 
-// 9. Watchers (if needed)
-watch(() => props.user, (newUser) => {
-  formData.value = { ...newUser }
-}, { deep: true })
+  // 4. Composables
+  const { $api } = useNuxtApp()
+  const { user: currentUser } = useAuth()
+
+  // 5. Reactive state
+  const isLoading = ref(false)
+  const formData = ref({ ...props.user })
+
+  // 6. Computed properties
+  const canEdit = computed(
+    () => props.isEditable && currentUser.value?.id === props.user.id
+  )
+
+  // 7. Methods
+  const handleSave = async () => {
+    isLoading.value = true
+    try {
+      const updatedUser = await $api.users.update(formData.value)
+      emit('update', updatedUser)
+    } catch (error) {
+      // Handle error
+    } finally {
+      isLoading.value = false
+    }
+  }
+
+  // 8. Lifecycle hooks
+  onMounted(() => {
+    // Component initialization
+  })
+
+  // 9. Watchers (if needed)
+  watch(
+    () => props.user,
+    newUser => {
+      formData.value = { ...newUser }
+    },
+    { deep: true }
+  )
 </script>
 
 <style scoped>
-/* Component-specific styles */
+  /* Component-specific styles */
 </style>
 ```
 
 ### Composables Organization Pattern
+
 ```typescript
 // composables/auth/useAuth.ts
 export const useAuth = () => {
   // 1. State management
   const user = ref<User | null>(null)
   const isAuthenticated = computed(() => !!user.value)
-  
+
   // 2. Core methods
   const login = async (credentials: LoginCredentials) => {
     // Implementation
   }
-  
+
   const logout = async () => {
     // Implementation
   }
-  
+
   // 3. Utility methods
   const hasPermission = (permission: string) => {
     return user.value?.permissions.includes(permission) ?? false
   }
-  
+
   // 4. Initialization
   const initialize = async () => {
     // Auto-login logic
   }
-  
+
   // 5. Return public API
   return {
     // State
     user: readonly(user),
     isAuthenticated,
-    
+
     // Methods
     login,
     logout,
     hasPermission,
-    initialize
+    initialize,
   }
 }
 ```
 
 ### Server API Route Pattern
+
 ```typescript
 // server/api/users/[id].get.ts
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   // 1. Parameter extraction
   const userId = getRouterParam(event, 'id')
-  
+
   // 2. Authentication check
   const user = await requireAuth(event)
-  
+
   // 3. Authorization check
   if (!hasPermission(user, 'users:read')) {
     throw createError({
       statusCode: 403,
-      statusMessage: 'Insufficient permissions'
+      statusMessage: 'Insufficient permissions',
     })
   }
-  
+
   // 4. Validation
   if (!userId || !isValidUUID(userId)) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Invalid user ID'
+      statusMessage: 'Invalid user ID',
     })
   }
-  
+
   // 5. Business logic
   try {
     const targetUser = await getUserById(userId)
-    
+
     if (!targetUser) {
       throw createError({
         statusCode: 404,
-        statusMessage: 'User not found'
+        statusMessage: 'User not found',
       })
     }
-    
+
     // 6. Response formatting
     return {
       success: true,
-      data: sanitizeUser(targetUser)
+      data: sanitizeUser(targetUser),
     }
   } catch (error) {
     // 7. Error handling
     throw createError({
       statusCode: 500,
-      statusMessage: 'Internal server error'
+      statusMessage: 'Internal server error',
     })
   }
 })
@@ -334,35 +353,32 @@ export default defineEventHandler(async (event) => {
 ## Configuration Standards
 
 ### `nuxt.config.ts` Organization
+
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
   // 1. Compatibility and future flags
   compatibilityDate: '2025-07-15',
   future: {
-    compatibilityVersion: 4
+    compatibilityVersion: 4,
   },
-  
+
   // 2. Development tools
   devtools: { enabled: true },
-  
+
   // 3. Core modules (order matters)
-  modules: [
-    '@nuxt/content',
-    '@nuxt/image',
-    '@nuxt/ui'
-  ],
-  
+  modules: ['@nuxt/content', '@nuxt/image', '@nuxt/ui'],
+
   // 4. Module configurations
   content: {
     highlight: {
-      theme: 'github-dark'
+      theme: 'github-dark',
     },
     markdown: {
-      toc: { depth: 3 }
-    }
+      toc: { depth: 3 },
+    },
   },
-  
+
   image: {
     quality: 80,
     format: ['webp', 'avif'],
@@ -372,57 +388,58 @@ export default defineNuxtConfig({
       md: 768,
       lg: 1024,
       xl: 1280,
-      xxl: 1536
-    }
+      xxl: 1536,
+    },
   },
-  
+
   ui: {
-    icons: ['heroicons', 'lucide']
+    icons: ['heroicons', 'lucide'],
   },
-  
+
   // 5. TypeScript configuration
   typescript: {
     strict: true,
-    typeCheck: true
+    typeCheck: true,
   },
-  
+
   // 6. CSS configuration
   css: ['~/assets/css/main.css'],
-  
+
   // 7. Runtime configuration
   runtimeConfig: {
     // Private keys (server-side only)
     apiSecret: process.env.API_SECRET,
     databaseUrl: process.env.DATABASE_URL,
-    
+
     // Public keys (exposed to client)
     public: {
       apiBase: process.env.API_BASE_URL || '/api',
-      appName: process.env.APP_NAME || 'Nuxt App'
-    }
+      appName: process.env.APP_NAME || 'Nuxt App',
+    },
   },
-  
+
   // 8. Build configuration
   nitro: {
     experimental: {
-      wasm: true
-    }
+      wasm: true,
+    },
   },
-  
+
   // 9. App configuration
   app: {
     head: {
       title: 'Enterprise Nuxt App',
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' }
-      ]
-    }
-  }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+      ],
+    },
+  },
 })
 ```
 
 ### Environment Variables Management
+
 ```bash
 # .env.example
 # Database
@@ -445,6 +462,7 @@ CONTENT_API_KEY=your-content-api-key
 ```
 
 ### TypeScript Configuration Best Practices
+
 ```json
 // types/index.ts - Global type definitions
 export interface User {
@@ -479,6 +497,7 @@ export interface PaginatedResponse<T> extends ApiResponse<T[]> {
 ### Import/Export Conventions
 
 #### Auto-imports (Nuxt 4 Built-in)
+
 ```typescript
 // ✅ Auto-imported (no explicit import needed)
 const route = useRoute()
@@ -491,6 +510,7 @@ const { toast } = useToast()
 ```
 
 #### Explicit Imports
+
 ```typescript
 // ✅ External libraries
 import { z } from 'zod'
@@ -504,6 +524,7 @@ import BaseModal from '~/components/ui/Modal/BaseModal.vue'
 ```
 
 #### Export Patterns
+
 ```typescript
 // ✅ Named exports for utilities
 export const formatCurrency = (amount: number) => { ... }
@@ -518,6 +539,7 @@ export type { User, ApiResponse } from './types'
 ```
 
 ### Component Auto-import Configuration
+
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
@@ -528,27 +550,30 @@ export default defineNuxtConfig({
     },
     {
       path: '~/components/ui',
-      prefix: 'Ui'
-    }
-  ]
+      prefix: 'Ui',
+    },
+  ],
 })
 ```
 
 ## Module Integration Standards
 
 ### @nuxt/content Integration
+
 ```typescript
 // composables/content/useContent.ts
 export const useContent = () => {
   const searchContent = async (query: string) => {
     return await queryContent()
-      .where({ $or: [
-        { title: { $icontains: query } },
-        { description: { $icontains: query } }
-      ]})
+      .where({
+        $or: [
+          { title: { $icontains: query } },
+          { description: { $icontains: query } },
+        ],
+      })
       .find()
   }
-  
+
   const getFeaturedPosts = async () => {
     return await queryContent('blog')
       .where({ featured: true })
@@ -556,15 +581,16 @@ export const useContent = () => {
       .limit(3)
       .find()
   }
-  
+
   return {
     searchContent,
-    getFeaturedPosts
+    getFeaturedPosts,
   }
 }
 ```
 
 ### @nuxt/image Integration
+
 ```vue
 <!-- components/ui/OptimizedImage.vue -->
 <template>
@@ -583,53 +609,54 @@ export const useContent = () => {
 </template>
 
 <script setup lang="ts">
-interface Props {
-  src: string
-  alt: string
-  width?: number
-  height?: number
-  sizes?: string
-  placeholder?: boolean
-  loading?: 'lazy' | 'eager'
-  format?: string
-  quality?: number
-}
+  interface Props {
+    src: string
+    alt: string
+    width?: number
+    height?: number
+    sizes?: string
+    placeholder?: boolean
+    loading?: 'lazy' | 'eager'
+    format?: string
+    quality?: number
+  }
 
-withDefaults(defineProps<Props>(), {
-  placeholder: true,
-  loading: 'lazy',
-  quality: 80
-})
+  withDefaults(defineProps<Props>(), {
+    placeholder: true,
+    loading: 'lazy',
+    quality: 80,
+  })
 </script>
 ```
 
 ### @nuxt/ui Integration
+
 ```typescript
 // composables/ui/useNotifications.ts
 export const useNotifications = () => {
   const toast = useToast()
-  
+
   const showSuccess = (message: string) => {
     toast.add({
       title: 'Success',
       description: message,
       color: 'green',
-      icon: 'i-heroicons-check-circle'
+      icon: 'i-heroicons-check-circle',
     })
   }
-  
+
   const showError = (message: string) => {
     toast.add({
       title: 'Error',
       description: message,
       color: 'red',
-      icon: 'i-heroicons-exclamation-circle'
+      icon: 'i-heroicons-exclamation-circle',
     })
   }
-  
+
   return {
     showSuccess,
-    showError
+    showError,
   }
 }
 ```
@@ -637,22 +664,22 @@ export const useNotifications = () => {
 ## Code Quality Standards
 
 ### ESLint Configuration
+
 ```javascript
 // .eslintrc.js
 module.exports = {
-  extends: [
-    '@nuxt/eslint-config'
-  ],
+  extends: ['@nuxt/eslint-config'],
   rules: {
     'vue/multi-word-component-names': 'error',
     'vue/component-name-in-template-casing': ['error', 'PascalCase'],
     '@typescript-eslint/no-unused-vars': 'error',
-    'prefer-const': 'error'
-  }
+    'prefer-const': 'error',
+  },
 }
 ```
 
 ### Testing Standards
+
 ```typescript
 // tests/components/UserProfile.test.ts
 import { describe, it, expect } from 'vitest'
@@ -664,13 +691,13 @@ describe('UserProfile', () => {
     const user = {
       id: '1',
       name: 'John Doe',
-      email: 'john@example.com'
+      email: 'john@example.com',
     }
-    
+
     const wrapper = mount(UserProfile, {
-      props: { user }
+      props: { user },
     })
-    
+
     expect(wrapper.text()).toContain('John Doe')
     expect(wrapper.text()).toContain('john@example.com')
   })
@@ -680,6 +707,7 @@ describe('UserProfile', () => {
 ## Documentation Standards
 
 ### Component Documentation
+
 ```vue
 <!-- components/ui/Button/Button.vue -->
 <!--
@@ -696,6 +724,7 @@ describe('UserProfile', () => {
 ```
 
 ### API Documentation
+
 ```typescript
 /**
  * Retrieves user information by ID

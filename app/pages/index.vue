@@ -2,7 +2,7 @@
   <div class="container mx-auto px-4 py-8">
     <div class="text-center">
       <h1 class="text-4xl font-bold text-gray-900 mb-4">
-        {{ $t("welcome") }} {{ appName }}
+        {{ $t('welcome') }} {{ appName }}
       </h1>
       <p class="text-lg text-gray-600 mb-8">这是一个基于 Nuxt 4 的现代化应用</p>
 
@@ -42,15 +42,15 @@
 </template>
 
 <script setup lang="ts">
-// 获取应用配置
-const { app } = useEnvironmentConfig();
-const appName = computed(() => app.name);
+  // 获取应用配置
+  const { app } = useEnvironmentConfig()
+  const appName = computed(() => app.name)
 
-// 设置页面元信息
-useHead({
-  title: "首页",
-  meta: [{ name: "description", content: "Nuxt 4 应用首页" }],
-});
+  // 设置页面元信息
+  useHead({
+    title: '首页',
+    meta: [{ name: 'description', content: 'Nuxt 4 应用首页' }],
+  })
 </script>
 
 <style scoped></style>

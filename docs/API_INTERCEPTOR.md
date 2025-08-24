@@ -38,10 +38,10 @@ export default defineNuxtPlugin(() => {
       console.log('API 响应成功:', response)
       return response
     },
-    
+
     onResponseError(error) {
       console.error('API 响应错误:', error)
-      
+
       switch (error.code) {
         case 401:
           navigateTo('/login')
@@ -52,7 +52,7 @@ export default defineNuxtPlugin(() => {
         default:
           console.error(`请求失败: ${error.message}`)
       }
-    }
+    },
   })
 })
 ```
@@ -77,13 +77,13 @@ const { data, pending, error, refresh } = useGet<User>('/api/users/1')
 // POST 请求
 const { data, pending, error, refresh } = usePost<User>('/api/users', {
   name: '张三',
-  email: 'zhangsan@example.com'
+  email: 'zhangsan@example.com',
 })
 
 // PUT 请求
 const { data, pending, error, refresh } = usePut<User>('/api/users/1', {
   name: '李四',
-  email: 'lisi@example.com'
+  email: 'lisi@example.com',
 })
 
 // DELETE 请求
@@ -98,32 +98,30 @@ const { data, pending, error, refresh } = useDelete('/api/users/1')
     <button @click="fetchData" :disabled="pending">
       {{ pending ? '加载中...' : '获取数据' }}
     </button>
-    
+
     <div v-if="data">
       <h3>{{ data.name }}</h3>
       <p>{{ data.email }}</p>
     </div>
-    
-    <div v-if="error" class="text-red-500">
-      错误: {{ error.message }}
-    </div>
+
+    <div v-if="error" class="text-red-500">错误: {{ error.message }}</div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { useGet } from '~/composables/useFetch'
+  import { useGet } from '~/composables/useFetch'
 
-interface User {
-  id: number
-  name: string
-  email: string
-}
+  interface User {
+    id: number
+    name: string
+    email: string
+  }
 
-const { data, pending, error, refresh } = useGet<User>('/api/users/1')
+  const { data, pending, error, refresh } = useGet<User>('/api/users/1')
 
-const fetchData = () => {
-  refresh()
-}
+  const fetchData = () => {
+    refresh()
+  }
 </script>
 ```
 
@@ -134,24 +132,24 @@ const fetchData = () => {
 const { data, pending, error } = useGet<User>('/api/users/1', {
   // 请求头
   headers: {
-    'Authorization': 'Bearer token'
+    Authorization: 'Bearer token',
   },
-  
+
   // 查询参数
   query: {
     page: 1,
-    limit: 10
+    limit: 10,
   },
-  
+
   // 自定义响应处理
   onResponse({ response }) {
     console.log('自定义响应处理:', response)
   },
-  
+
   // 自定义错误处理
   onResponseError({ response }) {
     console.error('自定义错误处理:', response)
-  }
+  },
 })
 ```
 
@@ -223,4 +221,4 @@ class ApiError extends Error {
 2. 全局拦截器在应用启动时自动配置
 3. 所有请求都会自动提取 `data` 字段
 4. 错误会自动转换为 `ApiError` 类型
-5. 支持 TypeScript 类型推断 
+5. 支持 TypeScript 类型推断

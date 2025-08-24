@@ -18,24 +18,24 @@
 
 ### 基础环境变量
 
-| 变量名 | 说明 | 默认值 | 示例 |
-|--------|------|--------|------|
-| `NODE_ENV` | 运行环境 | `development` | `development`, `production`, `test` |
-| `API_BASE_URL` | 后端 API 地址 | `http://localhost:4000` | `https://api.example.com` |
-| `API_TIMEOUT` | API 请求超时时间 | `10000` | `5000` |
-| `APP_NAME` | 应用名称 | `Nuxt App` | `我的应用` |
-| `APP_VERSION` | 应用版本 | `1.0.0` | `2.1.0` |
-| `DEBUG` | 调试模式 | `true` | `false` |
-| `LOG_LEVEL` | 日志级别 | `info` | `debug`, `warn`, `error` |
-| `NITRO_PORT` | 服务器端口 | `3000` | `8080` |
-| `NITRO_HOST` | 服务器主机 | `localhost` | `0.0.0.0` |
+| 变量名         | 说明             | 默认值                  | 示例                                |
+| -------------- | ---------------- | ----------------------- | ----------------------------------- |
+| `NODE_ENV`     | 运行环境         | `development`           | `development`, `production`, `test` |
+| `API_BASE_URL` | 后端 API 地址    | `http://localhost:4000` | `https://api.example.com`           |
+| `API_TIMEOUT`  | API 请求超时时间 | `10000`                 | `5000`                              |
+| `APP_NAME`     | 应用名称         | `Nuxt App`              | `我的应用`                          |
+| `APP_VERSION`  | 应用版本         | `1.0.0`                 | `2.1.0`                             |
+| `DEBUG`        | 调试模式         | `true`                  | `false`                             |
+| `LOG_LEVEL`    | 日志级别         | `info`                  | `debug`, `warn`, `error`            |
+| `NITRO_PORT`   | 服务器端口       | `3000`                  | `8080`                              |
+| `NITRO_HOST`   | 服务器主机       | `localhost`             | `0.0.0.0`                           |
 
 ### 私有环境变量（仅服务端）
 
-| 变量名 | 说明 | 默认值 |
-|--------|------|--------|
-| `JWT_SECRET` | JWT 密钥 | - |
-| `DATABASE_URL` | 数据库连接字符串 | - |
+| 变量名         | 说明             | 默认值 |
+| -------------- | ---------------- | ------ |
+| `JWT_SECRET`   | JWT 密钥         | -      |
+| `DATABASE_URL` | 数据库连接字符串 | -      |
 
 ## 环境配置示例
 
@@ -91,18 +91,18 @@ DATABASE_URL=postgresql://user:password@prod-server:5432/prod_db
 </template>
 
 <script setup lang="ts">
-import { useEnvironmentConfig } from '~/composables/useAppConfig'
+  import { useEnvironmentConfig } from '~/composables/useAppConfig'
 
-const config = useEnvironmentConfig()
+  const config = useEnvironmentConfig()
 
-// 根据环境执行不同逻辑
-if (config.env.isDevelopment) {
-  console.log('开发环境调试信息')
-}
+  // 根据环境执行不同逻辑
+  if (config.env.isDevelopment) {
+    console.log('开发环境调试信息')
+  }
 
-if (config.env.isProduction) {
-  // 生产环境特定逻辑
-}
+  if (config.env.isProduction) {
+    // 生产环境特定逻辑
+  }
 </script>
 ```
 
@@ -117,7 +117,7 @@ const { data, error } = useGet('/api/users')
 // POST 请求
 const { data: user } = usePost('/api/users', {
   name: '张三',
-  email: 'zhangsan@example.com'
+  email: 'zhangsan@example.com',
 })
 ```
 
@@ -125,16 +125,16 @@ const { data: user } = usePost('/api/users', {
 
 ```typescript
 // server/api/users.ts
-export default defineEventHandler(async (event) => {
+export default defineEventHandler(async event => {
   const config = useRuntimeConfig()
-  
+
   // 访问私有配置
   const dbUrl = config.databaseUrl
   const jwtSecret = config.jwtSecret
-  
+
   // 访问公共配置
   const apiTimeout = config.apiTimeout
-  
+
   // 业务逻辑...
 })
 ```
@@ -271,4 +271,4 @@ console.log('服务端配置:', config)
 - `app/composables/useAppConfig.ts` - 配置 composable
 - `app/composables/useFetch.ts` - API 请求配置
 - `app/plugins/api.ts` - API 插件配置
-- `app/pages/config-demo.vue` - 配置演示页面 
+- `app/pages/config-demo.vue` - 配置演示页面

@@ -9,7 +9,8 @@ const testData = {
 }
 
 function processData(data) {
-  const result = `Processing ${data.name} with ${data.items.length} items`
+  const result =
+    'Processing ' + data.name + ' with ' + data.items.length + ' items'
   return result
 }
 
