@@ -19,10 +19,10 @@
     "format:check": "prettier --check .",
     "type-check": "nuxt typecheck",
     "prepare-scopes": "node scripts/generateScopes.js",
-    "cz": "npm run prepare-scopes && czg",
+    "cz": "pnpm run prepare-scopes && czg",
     "release": "semantic-release --no-ci",
     "prepare": "husky",
-    "cz:release": "npm run cz && npm run release",
+    "cz:release": "pnpm run cz && pnpm run release",
     "test:release": "node scripts/test-release.js",
     "preinstall": "node scripts/check-node-version.js"
   },
