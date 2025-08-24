@@ -23,7 +23,6 @@
     "release": "semantic-release --no-ci",
     "prepare": "husky",
     "cz:release": "pnpm run cz && pnpm run release",
-    "test:release": "node scripts/test-release.js",
     "preinstall": "node scripts/check-node-version.js"
   },
   "dependencies": {
