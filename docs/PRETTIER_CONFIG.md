@@ -136,14 +136,30 @@ Prettier 和 ESLint 可以很好地协作：
 
 在 lint-staged 中，ESLint 先运行修复代码质量问题，然后 Prettier 运行格式化代码风格。
 
+### 冲突解决
+
+项目已安装 `eslint-config-prettier` 来自动禁用与 Prettier 冲突的 ESLint 规则：
+
+```javascript
+// eslint.config.js
+import prettier from 'eslint-config-prettier'
+
+export default [
+  // ... 其他配置
+  prettier, // 禁用与 Prettier 冲突的规则
+  // ... 其他配置
+]
+```
+
 ## 故障排除
 
 ### 格式化冲突
 
 如果 Prettier 和 ESLint 规则冲突：
 
-1. 使用 `eslint-config-prettier` 禁用冲突的 ESLint 规则
+1. ✅ 已安装 `eslint-config-prettier` 并配置在 ESLint 中
 2. 确保 Prettier 配置与项目风格一致
+3. 检查 ESLint 配置中是否还有其他格式化规则
 
 ### 忽略特定代码
 
