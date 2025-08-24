@@ -12,6 +12,7 @@
 
 - **ESLint 检查**: 对 staged 文件进行代码质量检查
 - **自动修复**: 自动修复可修复的 ESLint 错误
+- **Prettier 格式化**: 自动格式化代码风格
 
 ### 2. Commit-msg Hook
 
@@ -67,6 +68,8 @@ git commit -m "fix bug"
 
 - `commitlint.config.js`: Commitlint 配置
 - `package.json`: lint-staged 配置
+- `.prettierrc`: Prettier 格式化配置
+- `.prettierignore`: Prettier 忽略文件配置
 
 ## 工作流程
 
@@ -74,7 +77,7 @@ git commit -m "fix bug"
 2. 暂存文件: `git add .`
 3. 提交代码: `git commit -m "type: description"`
 4. Husky 自动运行检查:
-   - Pre-commit: ESLint 检查
+   - Pre-commit: ESLint 检查和 Prettier 格式化
    - Commit-msg: 提交信息格式验证
 
 ## 故障排除
@@ -93,6 +96,12 @@ git commit -m "message" --no-verify
 # 运行 ESLint
 npm run lint
 
+# 运行 Prettier 格式化
+npm run format
+
+# 检查 Prettier 格式
+npm run format:check
+
 # 运行 lint-staged
 npx lint-staged
 ```
@@ -102,4 +111,4 @@ npx lint-staged
 1. 确保所有团队成员都安装了依赖: `pnpm install`
 2. 不要删除 `.husky` 目录
 3. 提交信息必须符合规范，否则会被拒绝
-4. 代码必须通过 ESLint 检查才能提交
+4. 代码必须通过 ESLint 检查和 Prettier 格式化才能提交
