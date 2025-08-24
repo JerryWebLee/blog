@@ -1,0 +1,137 @@
+name: Step by Step Test
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  step1-checkout:
+    name: Step 1 - Checkout
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Success
+        run: echo "Checkout successful"
+
+  step2-node:
+    name: Step 2 - Node.js Setup
+    runs-on: ubuntu-latest
+    needs: step1-checkout
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Show Node version
+        run: node --version
+      - name: Success
+        run: echo "Node.js setup successful"
+
+  step3-pnpm:
+    name: Step 3 - pnpm Setup
+    runs-on: ubuntu-latest
+    needs: step2-node
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Show pnpm version
+        run: pnpm --version
+      - name: Success
+        run: echo "pnpm setup successful"
+
+  step4-install:
+    name: Step 4 - Install Dependencies
+    runs-on: ubuntu-latest
+    needs: step3-pnpm
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Success
+        run: echo "Dependencies installed successfully"
+
+  step5-lint:
+    name: Step 5 - Lint
+    runs-on: ubuntu-latest
+    needs: step4-install
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Lint
+        run: pnpm run lint
+      - name: Success
+        run: echo "Lint successful"
+
+  step6-typecheck:
+    name: Step 6 - Type Check
+    runs-on: ubuntu-latest
+    needs: step5-lint
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Type check
+        run: pnpm run type-check
+      - name: Success
+        run: echo "Type check successful"
+
+  step7-format:
+    name: Step 7 - Format Check
+    runs-on: ubuntu-latest
+    needs: step6-typecheck
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: latest
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Format check
+        run: pnpm run format:check
+      - name: Success
+        run: echo "Format check successful"
