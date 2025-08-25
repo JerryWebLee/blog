@@ -2,7 +2,9 @@
   "welcome": "Welcome",
   "nav": {
     "home": "Home",
-    "config": "Config Demo"
+    "config": "Config Demo",
+    "blog": "Blog",
+    "about": "About"
   },
   "footer": {
     "rights": "All rights reserved",
@@ -28,5 +30,19 @@
     "email": "Email",
     "password": "Password",
     "confirmPassword": "Confirm Password"
+  },
+  "blog": {
+    "title": "Explore the Ocean of Knowledge",
+    "subtitle": "Sharing technical insights, design inspiration and life reflections",
+    "searchPlaceholder": "Search articles, tags or authors...",
+    "readTime": "min read",
+    "readMore": "Read More",
+    "loadMore": "Load More",
+    "newsletter": {
+      "title": "Subscribe to Our Newsletter",
+      "description": "Get the latest article updates and exclusive content",
+      "placeholder": "Enter your email address",
+      "subscribe": "Subscribe"
+    }
   }
 }

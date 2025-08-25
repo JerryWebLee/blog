@@ -12,6 +12,9 @@ export default defineNuxtConfig({
     '@pinia/nuxt',
   ],
 
+  // CSS 配置
+  css: ['~/assets/css/main.css'],
+
   // UI 配置
   ui: {
     fonts: false,

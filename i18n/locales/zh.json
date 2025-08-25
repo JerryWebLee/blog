@@ -2,7 +2,9 @@
   "welcome": "欢迎",
   "nav": {
     "home": "首页",
-    "config": "配置演示"
+    "config": "配置演示",
+    "blog": "博客",
+    "about": "关于"
   },
   "footer": {
     "rights": "保留所有权利",
@@ -28,5 +30,19 @@
     "email": "邮箱",
     "password": "密码",
     "confirmPassword": "确认密码"
+  },
+  "blog": {
+    "title": "探索知识的海洋",
+    "subtitle": "分享技术见解、设计灵感与生活感悟",
+    "searchPlaceholder": "搜索文章、标签或作者...",
+    "readTime": "分钟阅读",
+    "readMore": "阅读更多",
+    "loadMore": "加载更多",
+    "newsletter": {
+      "title": "订阅我们的通讯",
+      "description": "获取最新的文章更新和独家内容",
+      "placeholder": "输入您的邮箱地址",
+      "subscribe": "订阅"
+    }
   }
 }

@@ -1,0 +1,46 @@
+@import 'tailwindcss';
+
+/* 自定义样式 */
+@layer base {
+  html {
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  body {
+    background-color: rgb(15 23 42); /* slate-900 */
+    color: white;
+  }
+}
+
+@layer components {
+  /* 自定义组件样式 */
+  .btn-primary {
+    background-color: rgb(37 99 235); /* blue-600 */
+    color: white;
+    font-weight: 500;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.2s;
+  }
+
+  .btn-primary:hover {
+    background-color: rgb(29 78 216); /* blue-700 */
+  }
+
+  .card {
+    background-color: rgb(30 41 59); /* slate-800 */
+    border-radius: 0.5rem;
+    border: 1px solid rgb(51 65 85); /* slate-700 */
+    padding: 1.5rem;
+  }
+}
+
+@layer utilities {
+  /* 自定义工具类 */
+  .text-gradient {
+    background: linear-gradient(to right, rgb(96 165 250), rgb(168 85 247));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+}

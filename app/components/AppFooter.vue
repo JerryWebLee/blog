@@ -1,13 +1,13 @@
 <template>
-  <footer class="bg-gray-50 border-t border-gray-200">
+  <footer class="bg-slate-800 border-t border-slate-700">
     <div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
       <div class="flex flex-col md:flex-row justify-between items-center">
         <!-- Copyright -->
         <div class="text-center md:text-left">
-          <p class="text-sm text-gray-500">
+          <p class="text-sm text-slate-400">
             © {{ currentYear }} {{ appName }}. {{ $t('footer.rights') }}
           </p>
-          <p class="text-xs text-gray-400 mt-1">
+          <p class="text-xs text-slate-500 mt-1">
             {{ $t('footer.version') }}: {{ appVersion }}
           </p>
         </div>
@@ -16,16 +16,16 @@
         <div class="mt-4 md:mt-0">
           <nav class="flex space-x-6">
             <NuxtLink
-              to="/privacy"
-              class="text-sm text-gray-500 hover:text-gray-900"
+              to="/about"
+              class="text-sm text-slate-400 hover:text-white transition-colors"
             >
-              {{ $t('footer.privacy') }}
+              {{ $t('nav.about') }}
             </NuxtLink>
             <NuxtLink
-              to="/terms"
-              class="text-sm text-gray-500 hover:text-gray-900"
+              to="/blog"
+              class="text-sm text-slate-400 hover:text-white transition-colors"
             >
-              {{ $t('footer.terms') }}
+              {{ $t('nav.blog') }}
             </NuxtLink>
           </nav>
         </div>
