@@ -2,6 +2,12 @@
 
 > 本文档由系统自动生成
 
+# [1.2.0](https://github.com/JerryWebLee/blog/compare/v1.1.0...v1.2.0) (2025-08-25)
+
+### ✨ 新增功能
+
+- 添加主题切换功能总结文档，包含实现细节和 Nuxt UI 集成说明 ([cca6e99b](https://github.com/JerryWebLee/blog/commit/cca6e99bc30dddb5be3c7d66123952851532116c))
+
 # [1.1.0](https://github.com/JerryWebLee/blog/compare/v1.0.0...v1.1.0) (2025-08-25)
 
 ### ⚡ 性能提升
