@@ -1,11 +1,13 @@
 <template>
-  <header class="bg-slate-900 border-b border-slate-700">
+  <header class="border-b transition-colors duration-300">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="flex justify-between items-center h-16">
         <!-- Logo -->
         <div class="flex items-center">
           <NuxtLink to="/" class="flex items-center">
-            <h1 class="text-xl font-light text-white">{{ appName }}</h1>
+            <h1 class="text-xl font-light transition-colors duration-300">
+              {{ appName }}
+            </h1>
           </NuxtLink>
         </div>
 
@@ -13,48 +15,47 @@
         <nav class="hidden md:flex space-x-8">
           <NuxtLink
             to="/"
-            class="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            active-class="text-white font-medium"
+            class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+            active-class="text-primary-600 dark:text-primary-400 font-medium"
           >
             {{ $t('nav.home') }}
           </NuxtLink>
           <NuxtLink
             to="/blog"
-            class="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            active-class="text-white font-medium"
+            class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+            active-class="text-primary-600 dark:text-primary-400 font-medium"
           >
             {{ $t('nav.blog') }}
           </NuxtLink>
           <NuxtLink
             to="/config-demo"
-            class="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            active-class="text-white font-medium"
+            class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+            active-class="text-primary-600 dark:text-primary-400 font-medium"
           >
             {{ $t('nav.config') }}
           </NuxtLink>
           <NuxtLink
             to="/about"
-            class="text-slate-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
-            active-class="text-white font-medium"
+            class="px-3 py-2 rounded-md text-sm font-medium transition-colors duration-300"
+            active-class="text-primary-600 dark:text-primary-400 font-medium"
           >
             {{ $t('nav.about') }}
           </NuxtLink>
         </nav>
 
-        <!-- Language Switcher -->
+        <!-- Right side controls -->
         <div class="flex items-center space-x-4">
+          <!-- Theme Toggle -->
+          <ThemeToggle />
+
+          <!-- Language Switcher -->
           <UButton
             v-for="locale in availableLocales"
             :key="locale.code"
             :variant="locale.code === currentLocale ? 'solid' : 'ghost'"
-            color="neutral"
+            color="primary"
             size="sm"
             @click="switchLanguage(locale.code)"
-            :class="
-              locale.code === currentLocale
-                ? 'bg-white text-slate-900'
-                : 'text-white hover:bg-white/10'
-            "
           >
             {{ locale.language }}
           </UButton>

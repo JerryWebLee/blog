@@ -1,7 +1,16 @@
 onlyBuiltDependencies:
+  # 开发工具
   - '@parcel/watcher'
+  - 'esbuild'
+
+  # UI 框架
   - '@tailwindcss/oxide'
-  - better-sqlite3
-  - esbuild
-  - sharp
-  - vue-demi
+
+  # 数据库
+  - 'better-sqlite3'
+
+  # 图像处理
+  - 'sharp'
+
+  # 框架兼容
+  - 'vue-demi'

@@ -1,14 +1,14 @@
 <template>
-  <div class="min-h-screen bg-slate-900 text-white">
+  <div class="min-h-screen">
     <!-- Hero Section -->
     <section class="relative py-32">
       <div class="container mx-auto px-4">
         <div class="text-center">
-          <h1 class="text-6xl md:text-8xl font-light mb-8 text-white">
+          <h1 class="text-6xl md:text-8xl font-light mb-8">
             {{ appName }}
           </h1>
           <p
-            class="text-xl md:text-2xl text-slate-300 mb-12 max-w-3xl mx-auto leading-relaxed"
+            class="text-xl md:text-2xl mb-12 max-w-3xl mx-auto leading-relaxed text-gray-600 dark:text-gray-300"
           >
             分享技术见解、设计灵感与生活感悟
           </p>
@@ -16,22 +16,10 @@
           <div
             class="flex flex-col sm:flex-row gap-6 justify-center items-center"
           >
-            <UButton
-              to="/blog"
-              color="neutral"
-              variant="solid"
-              size="xl"
-              class="text-lg px-8 py-4 bg-white text-slate-900 hover:bg-slate-100"
-            >
+            <UButton to="/blog" color="primary" variant="solid" size="xl">
               开始阅读
             </UButton>
-            <UButton
-              to="/about"
-              color="neutral"
-              variant="outline"
-              size="xl"
-              class="text-lg px-8 py-4 border-white text-white hover:bg-white hover:text-slate-900"
-            >
+            <UButton to="/about" color="primary" variant="outline" size="xl">
               了解更多
             </UButton>
           </div>
@@ -43,10 +31,8 @@
     <section class="py-20">
       <div class="container mx-auto px-4">
         <div class="text-center mb-16">
-          <h2 class="text-4xl md:text-5xl font-light text-white mb-6">
-            最新文章
-          </h2>
-          <p class="text-xl text-slate-300 max-w-2xl mx-auto">
+          <h2 class="text-4xl md:text-5xl font-light mb-6">最新文章</h2>
+          <p class="text-xl max-w-2xl mx-auto text-gray-600 dark:text-gray-300">
             探索我们最新的技术分享和设计灵感
           </p>
         </div>
@@ -54,61 +40,55 @@
         <div
           class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto"
         >
-          <article
+          <UCard
             v-for="article in latestArticles"
             :key="article.id"
-            class="group bg-slate-800 rounded-lg overflow-hidden hover:bg-slate-700 transition-colors duration-300"
+            class="group hover:scale-105 transition-all duration-300"
           >
-            <div class="relative h-48 overflow-hidden">
-              <img
-                :src="article.coverImage"
-                :alt="article.title"
-                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-              />
-              <div class="absolute inset-0 bg-black/40"></div>
-              <div class="absolute top-4 left-4">
-                <span
-                  class="px-3 py-1 bg-white/20 backdrop-blur-sm rounded-full text-sm text-white"
-                >
-                  {{ getCategoryName(article.category) }}
-                </span>
+            <template #header>
+              <div class="relative h-48 overflow-hidden">
+                <img
+                  :src="article.coverImage"
+                  :alt="article.title"
+                  class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                />
+                <div class="absolute inset-0 bg-black/40"></div>
+                <div class="absolute top-4 left-4">
+                  <UBadge color="primary" variant="solid" size="sm">
+                    {{ getCategoryName(article.category) }}
+                  </UBadge>
+                </div>
               </div>
-            </div>
+            </template>
+
             <div class="p-6">
               <h3
-                class="text-xl font-medium text-white mb-3 group-hover:text-slate-200 transition-colors"
+                class="text-xl font-medium mb-3 group-hover:text-primary-600 transition-colors"
               >
                 {{ article.title }}
               </h3>
-              <p class="text-slate-400 mb-4 line-clamp-2">
+              <p class="mb-4 line-clamp-2 text-gray-600 dark:text-gray-300">
                 {{ article.excerpt }}
               </p>
               <div class="flex items-center justify-between">
-                <div class="flex items-center text-sm text-slate-500">
+                <div class="text-sm text-gray-500 dark:text-gray-400">
                   <span>{{ formatDate(article.publishDate) }}</span>
                 </div>
                 <UButton
                   :to="`/blog/${article.slug}`"
-                  color="neutral"
+                  color="primary"
                   variant="ghost"
                   size="sm"
-                  class="text-white hover:bg-white/10"
                 >
                   阅读
                 </UButton>
               </div>
             </div>
-          </article>
+          </UCard>
         </div>
 
         <div class="text-center mt-12">
-          <UButton
-            to="/blog"
-            color="white"
-            variant="outline"
-            size="lg"
-            class="border-white text-white hover:bg-white hover:text-slate-900"
-          >
+          <UButton to="/blog" color="primary" variant="outline" size="lg">
             查看所有文章
             <UIcon name="i-heroicons-arrow-right" class="w-5 h-5 ml-2" />
           </UButton>
@@ -117,12 +97,12 @@
     </section>
 
     <!-- Newsletter Section -->
-    <section class="py-20 bg-slate-800">
+    <section class="py-20 bg-gray-50 dark:bg-gray-900">
       <div class="container mx-auto px-4 text-center">
-        <h2 class="text-4xl md:text-5xl font-light text-white mb-6">
-          订阅更新
-        </h2>
-        <p class="text-xl text-slate-300 mb-8 max-w-2xl mx-auto">
+        <h2 class="text-4xl md:text-5xl font-light mb-6">订阅更新</h2>
+        <p
+          class="text-xl mb-8 max-w-2xl mx-auto text-gray-600 dark:text-gray-300"
+        >
           获取最新的文章更新和独家内容
         </p>
         <div class="max-w-md mx-auto flex gap-4">
@@ -131,16 +111,9 @@
             placeholder="输入您的邮箱地址"
             type="email"
             size="lg"
-            class="flex-1 bg-slate-700 border-slate-600 text-white placeholder-slate-400"
+            class="flex-1"
           />
-          <UButton
-            color="white"
-            variant="solid"
-            size="lg"
-            class="bg-white text-slate-900 hover:bg-slate-100"
-          >
-            订阅
-          </UButton>
+          <UButton color="primary" variant="solid" size="lg"> 订阅 </UButton>
         </div>
       </div>
     </section>
