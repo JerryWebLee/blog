@@ -1,0 +1,72 @@
+# 部署配置文件示例
+# 复制此文件为 deploy.config.json 并修改相应配置
+# 注意：此文件包含敏感信息，已添加到.gitignore中
+
+{
+  "docker": {
+    "registry": "your-dockerhub-username",
+    "imageName": "nuxt-blog",
+    "tag": "latest"
+  },
+  "servers": {
+    "production": {
+      "host": "your-production-server-ip",
+      "user": "your-username",
+      "port": 22,
+      "deployPath": "/home/your-username/nuxt-blog",
+      "dockerComposeFile": "docker-compose.prod.yml"
+    },
+    "staging": {
+      "host": "your-staging-server-ip",
+      "user": "your-username", 
+      "port": 22,
+      "deployPath": "/home/your-username/nuxt-blog-staging",
+      "dockerComposeFile": "docker-compose.staging.yml"
+    }
+  },
+  "app": {
+    "port": 3000,
+    "containerName": "nuxt-blog-app"
+  }
+}
+
+# 配置说明：
+# 
+# docker:
+#   registry: Docker Hub用户名
+#   imageName: 镜像名称
+#   tag: 镜像标签
+#
+# servers:
+#   production/staging: 服务器环境名称
+#     host: 服务器IP地址
+#     user: SSH用户名
+#     port: SSH端口（通常为22）
+#     deployPath: 服务器上的部署路径
+#     dockerComposeFile: 使用的docker-compose配置文件
+#
+# app:
+#   port: 应用运行端口
+#   containerName: 容器名称
+#
+# 示例配置：
+# {
+#   "docker": {
+#     "registry": "myusername",
+#     "imageName": "nuxt-blog",
+#     "tag": "latest"
+#   },
+#   "servers": {
+#     "production": {
+#       "host": "192.168.1.100",
+#       "user": "ubuntu",
+#       "port": 22,
+#       "deployPath": "/home/ubuntu/nuxt-blog",
+#       "dockerComposeFile": "docker-compose.prod.yml"
+#     }
+#   },
+#   "app": {
+#     "port": 3000,
+#     "containerName": "nuxt-blog-app"
+#   }
+# } 

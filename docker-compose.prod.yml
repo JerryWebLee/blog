@@ -1,0 +1,82 @@
+version: '3.8'
+
+services:
+  # Nuxt 4博客应用服务 - 生产环境
+  nuxt-blog:
+    image: ${DOCKER_REGISTRY:-your-dockerhub-username}/nuxt-blog:${IMAGE_TAG:-latest}
+    container_name: nuxt-blog-app
+    restart: unless-stopped
+
+    # 端口映射：主机端口:容器端口
+    ports:
+      - '${APP_PORT:-3000}:3000'
+
+    # 环境变量配置
+    environment:
+      # 基础配置
+      NODE_ENV: production
+      NUXT_HOST: 0.0.0.0
+      NUXT_PORT: 3000
+
+      # 应用配置
+      APP_NAME: ${APP_NAME:-"Nuxt Blog"}
+      APP_VERSION: ${APP_VERSION:-"1.2.0"}
+      DEBUG: ${DEBUG:-"false"}
+      LOG_LEVEL: ${LOG_LEVEL:-"info"}
+
+      # API配置
+      API_BASE_URL: ${API_BASE_URL:-}
+      API_TIMEOUT: ${API_TIMEOUT:-10000}
+
+      # 数据库配置
+      DATABASE_URL: ${DATABASE_URL:-}
+
+      # JWT配置
+      JWT_SECRET: ${JWT_SECRET:-}
+
+      # Nitro服务器配置
+      NITRO_PORT: 3000
+      NITRO_HOST: 0.0.0.0
+
+    # 健康检查
+    healthcheck:
+      test:
+        [
+          'CMD',
+          'node',
+          '-e',
+          "require('http').get('http://localhost:3000/api/health', (res) => { process.exit(res.statusCode === 200 ? 0 : 1) })",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+    # 资源限制
+    deploy:
+      resources:
+        limits:
+          memory: ${MEMORY_LIMIT:-512M}
+          cpus: ${CPU_LIMIT:-0.5}
+        reservations:
+          memory: ${MEMORY_RESERVATION:-256M}
+          cpus: ${CPU_RESERVATION:-0.25}
+
+    # 日志配置
+    logging:
+      driver: 'json-file'
+      options:
+        max-size: '10m'
+        max-file: '3'
+
+    # 网络配置
+    networks:
+      - nuxt-network
+
+# 网络配置
+networks:
+  nuxt-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16

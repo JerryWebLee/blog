@@ -17,12 +17,19 @@ logs
 .DS_Store
 .fleet
 .idea
-.vscode
 
 # Local env files
 .env
 .env.*
 !.env.example
+
+# 部署配置文件（包含敏感信息）
+deploy.config.json
+deploy.config.local.json
+
+# 部署脚本生成的临时文件
+deploy-*.tmp
+*.tmp
 
 .cz-scopes.json
 .stylelintcache
